@@ -1,3 +1,8 @@
+/* Custom elements default to display: inline; the frame needs a block parent. */
+.hotspots {
+  display: block;
+}
+
 /*
  * No overflow:hidden here — popovers anchored near the edges need to escape the
  * frame. The rounding lives on the image instead.

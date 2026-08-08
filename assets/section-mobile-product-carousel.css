@@ -1,4 +1,10 @@
+/*
+ * <mobile-product-carousel> is an unknown element, so it defaults to
+ * display: inline. Without this the .page-width padding on it is ignored when
+ * sizing the track, and the track's negative margins overflow the viewport.
+ */
 .concept-carousel {
+  display: block;
   --concept-carousel-gap: 1.2rem;
   --concept-carousel-columns: 1.35;
 }
