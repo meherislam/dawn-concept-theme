@@ -1,0 +1,4 @@
+# Local preview harness — plain HTML/CSS/JS used to exercise the custom
+# sections in a browser without a store. Not a Shopify theme directory, so it
+# must never be pushed with `shopify theme push` / `shopify theme dev`.
+.preview/

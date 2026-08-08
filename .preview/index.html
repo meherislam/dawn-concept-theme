@@ -1,0 +1,447 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Concept theme — local preview harness</title>
+
+    <!--
+      LOCAL PREVIEW HARNESS — not part of the theme, never uploaded (.shopifyignore).
+
+      Purpose: exercise the CSS and vanilla JS of the custom sections without a
+      Shopify store. Liquid renders server-side, so the markup below is a
+      hand-written copy of what each section emits. The stylesheets and scripts
+      are the REAL files from ../assets — this page does not duplicate them.
+
+      What this CAN verify: scroll-snap feel and edge peek, arrow enable/disable
+      state, hotspot popover flip positions and outside-click/Escape handling,
+      before/after pointer drag + keyboard, mega-menu promo layout, reduced-motion
+      behaviour, RTL.
+
+      What this CANNOT verify: anything Liquid renders — real product cards,
+      prices, navigation from a real linklist, theme-editor settings. Use a free
+      Shopify Partners development store and `shopify theme dev` for that.
+    -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Real theme stylesheets -->
+    <link rel="stylesheet" href="../assets/base.css" />
+    <link rel="stylesheet" href="../assets/component-list-menu.css" />
+    <link rel="stylesheet" href="../assets/component-mega-menu.css" />
+    <link rel="stylesheet" href="../assets/section-mobile-product-carousel.css" />
+    <link rel="stylesheet" href="../assets/section-image-hotspots.css" />
+    <link rel="stylesheet" href="../assets/section-before-after-slider.css" />
+
+    <!-- Stands in for the :root block layout/theme.liquid generates -->
+    <link rel="stylesheet" href="tokens.css" />
+    <link rel="stylesheet" href="harness.css" />
+
+    <script>
+      // layout/theme.liquid does exactly this. Several stylesheets — including
+      // component-mega-menu.css — key their animated state off the `js` class.
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+    </script>
+  </head>
+
+  <body>
+    <div class="pv-toolbar">
+      <strong class="pv-toolbar__title">Concept preview harness</strong>
+      <label><input type="checkbox" id="pv-rtl" /> RTL</label>
+      <label><input type="checkbox" id="pv-scheme" /> scheme-2</label>
+      <label><input type="checkbox" id="pv-outline" /> Outline boxes</label>
+      <span class="pv-toolbar__note" id="pv-width"></span>
+    </div>
+
+    <!-- ================================================================== -->
+    <!-- Mega menu (snippets/header-mega-menu.liquid + sections/header.liquid) -->
+    <!-- ================================================================== -->
+    <section class="pv-section" data-pv-scheme>
+      <h1 class="pv-label">1 — Mega menu <small>hover or click a top-level item</small></h1>
+      <div class="pv-header header-wrapper color-scheme-1 gradient">
+        <div class="page-width pv-header__inner">
+          <span class="pv-logo">CONCEPT</span>
+
+          <nav class="header__inline-menu">
+            <ul class="list-menu list-menu--inline" role="list">
+              <li>
+                <header-menu>
+                  <details id="Details-HeaderMenu-1" class="mega-menu">
+                    <summary id="HeaderMenu-shop-all" class="header__menu-item list-menu__item link focus-inset">
+                      <span>Shop all</span>
+                      <svg
+                        aria-hidden="true"
+                        focusable="false"
+                        class="icon icon-caret"
+                        viewBox="0 0 10 6"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z"
+                          fill="currentColor"
+                        ></path>
+                      </svg>
+                    </summary>
+                    <div
+                      id="MegaMenu-Content-1"
+                      class="mega-menu__content color-scheme-1 gradient motion-reduce global-settings-popup"
+                      tabindex="-1"
+                    >
+                      <!-- with promo: .mega-menu__inner--with-promo -->
+                      <div class="mega-menu__inner page-width mega-menu__inner--with-promo">
+                        <ul class="mega-menu__list" style="--mega-menu-columns: 5;" role="list">
+                          <li>
+                            <a href="#" class="mega-menu__link mega-menu__link--level-2 link">Outerwear</a>
+                            <ul class="list-unstyled" role="list">
+                              <li><a href="#" class="mega-menu__link link">Parkas</a></li>
+                              <li><a href="#" class="mega-menu__link link">Trench coats</a></li>
+                              <li><a href="#" class="mega-menu__link link">Puffers</a></li>
+                            </ul>
+                          </li>
+                          <li>
+                            <a href="#" class="mega-menu__link mega-menu__link--level-2 link">Knitwear</a>
+                            <ul class="list-unstyled" role="list">
+                              <li><a href="#" class="mega-menu__link link">Merino</a></li>
+                              <li><a href="#" class="mega-menu__link link">Cashmere</a></li>
+                              <li><a href="#" class="mega-menu__link link">Cardigans</a></li>
+                            </ul>
+                          </li>
+                          <li>
+                            <a href="#" class="mega-menu__link mega-menu__link--level-2 link">Trousers</a>
+                            <ul class="list-unstyled" role="list">
+                              <li><a href="#" class="mega-menu__link link">Wide leg</a></li>
+                              <li><a href="#" class="mega-menu__link link">Tapered</a></li>
+                            </ul>
+                          </li>
+                          <li>
+                            <a href="#" class="mega-menu__link mega-menu__link--level-2 link">Accessories</a>
+                            <ul class="list-unstyled" role="list">
+                              <li><a href="#" class="mega-menu__link link">Belts</a></li>
+                              <li><a href="#" class="mega-menu__link link">Scarves</a></li>
+                              <li><a href="#" class="mega-menu__link link">Hats</a></li>
+                            </ul>
+                          </li>
+                          <li>
+                            <a href="#" class="mega-menu__link mega-menu__link--level-2 link">Footwear</a>
+                            <ul class="list-unstyled" role="list">
+                              <li><a href="#" class="mega-menu__link link">Boots</a></li>
+                              <li><a href="#" class="mega-menu__link link">Loafers</a></li>
+                            </ul>
+                          </li>
+                        </ul>
+
+                        <div class="mega-menu__promo">
+                          <a href="#" class="mega-menu__promo-card">
+                            <img class="mega-menu__promo-image" alt="" data-pv-img="promo" />
+                            <span class="mega-menu__promo-body">
+                              <span class="mega-menu__promo-heading">The winter edit</span>
+                              <span class="mega-menu__promo-text">Layering pieces built for the cold.</span>
+                              <span class="mega-menu__promo-cta">Shop now</span>
+                            </span>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </details>
+                </header-menu>
+              </li>
+
+              <li>
+                <header-menu>
+                  <details id="Details-HeaderMenu-2" class="mega-menu">
+                    <summary id="HeaderMenu-journal" class="header__menu-item list-menu__item link focus-inset">
+                      <span>Journal</span>
+                      <svg aria-hidden="true" focusable="false" class="icon icon-caret" viewBox="0 0 10 6">
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z"
+                          fill="currentColor"
+                        ></path>
+                      </svg>
+                    </summary>
+                    <div
+                      id="MegaMenu-Content-2"
+                      class="mega-menu__content color-scheme-1 gradient motion-reduce global-settings-popup"
+                      tabindex="-1"
+                    >
+                      <!-- no promo block matches this item: no --with-promo modifier -->
+                      <div class="mega-menu__inner page-width">
+                        <ul class="mega-menu__list mega-menu__list--condensed" style="--mega-menu-columns: 5;" role="list">
+                          <li><a href="#" class="mega-menu__link mega-menu__link--level-2 link">Behind the seams</a></li>
+                          <li><a href="#" class="mega-menu__link mega-menu__link--level-2 link">Materials</a></li>
+                          <li><a href="#" class="mega-menu__link mega-menu__link--level-2 link">Care guide</a></li>
+                          <li><a href="#" class="mega-menu__link mega-menu__link--level-2 link">Lookbook</a></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </details>
+                </header-menu>
+              </li>
+
+              <li>
+                <a href="#" class="header__menu-item list-menu__item link link--text focus-inset"><span>About</span></a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- Mobile product carousel (sections/mobile-product-carousel.liquid)   -->
+    <!-- ================================================================== -->
+    <section class="pv-section" data-pv-scheme>
+      <h1 class="pv-label">
+        2 — Mobile product carousel
+        <small>cards are stand-ins for {% render 'card-product' %}; the track is the real thing</small>
+      </h1>
+
+      <style>
+        /* Mirrors the {% style %} block the section emits for its own id. */
+        #Carousel-preview {
+          --concept-carousel-columns-desktop: 4;
+        }
+      </style>
+
+      <div class="color-scheme-1 gradient">
+        <mobile-product-carousel id="Carousel-preview" class="concept-carousel page-width isolate">
+          <div class="concept-carousel__header">
+            <h2 class="concept-carousel__heading inline-richtext h1">Featured products</h2>
+            <div class="concept-carousel__controls concept-carousel__controls--visible">
+              <button
+                type="button"
+                class="concept-carousel__arrow concept-carousel__arrow--prev"
+                data-carousel-prev
+                aria-controls="CarouselTrack-preview"
+                aria-label="Previous slide"
+              >
+                <span class="icon" aria-hidden="true" data-pv-icon="arrow"></span>
+              </button>
+              <button
+                type="button"
+                class="concept-carousel__arrow concept-carousel__arrow--next"
+                data-carousel-next
+                aria-controls="CarouselTrack-preview"
+                aria-label="Next slide"
+              >
+                <span class="icon" aria-hidden="true" data-pv-icon="arrow"></span>
+              </button>
+            </div>
+          </div>
+
+          <ul
+            id="CarouselTrack-preview"
+            class="concept-carousel__track"
+            data-carousel-track
+            role="list"
+            tabindex="0"
+            aria-label="Featured products"
+          >
+            <!-- slides injected by harness.js -->
+          </ul>
+        </mobile-product-carousel>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- Image hotspots (sections/image-hotspots.liquid)                     -->
+    <!-- ================================================================== -->
+    <section class="pv-section" data-pv-scheme>
+      <h1 class="pv-label">
+        3 — Image hotspots
+        <small>markers at the corners test the popover flip logic</small>
+      </h1>
+
+      <style>
+        #Hotspots-preview .hotspots__frame {
+          aspect-ratio: 1.777;
+        }
+      </style>
+
+      <div class="color-scheme-1 gradient">
+        <div class="page-width isolate">
+          <h2 class="inline-richtext h1">Shop the look</h2>
+
+          <image-hotspots id="Hotspots-preview" class="hotspots">
+            <div class="hotspots__frame">
+              <img class="hotspots__image" alt="" data-pv-img="hero" />
+
+              <!-- x=20 y=25  → right / down (default) -->
+              <div class="hotspots__item" style="--hotspot-x: 20%; --hotspot-y: 25%;">
+                <button
+                  type="button"
+                  class="hotspots__marker"
+                  data-hotspot-marker
+                  aria-expanded="false"
+                  aria-controls="HotspotPanel-preview-a"
+                  aria-label="Merino crew — View full details"
+                >
+                  <span class="hotspots__pulse" aria-hidden="true"></span>
+                  <span class="hotspots__marker-icon" aria-hidden="true"></span>
+                </button>
+                <div id="HotspotPanel-preview-a" class="hotspots__popover hotspots__popover--right" hidden>
+                  <div class="hotspots__card">
+                    <img class="hotspots__card-image" alt="" data-pv-img="card1" />
+                    <div class="hotspots__card-info">
+                      <a href="#" class="hotspots__card-title link">Merino crew</a>
+                      <div class="price"><span class="price-item">$128.00</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- x=85 y=25  → LEFT flip, down -->
+              <div class="hotspots__item" style="--hotspot-x: 85%; --hotspot-y: 25%;">
+                <button
+                  type="button"
+                  class="hotspots__marker"
+                  data-hotspot-marker
+                  aria-expanded="false"
+                  aria-controls="HotspotPanel-preview-b"
+                  aria-label="Wide-leg trouser — View full details"
+                >
+                  <span class="hotspots__pulse" aria-hidden="true"></span>
+                  <span class="hotspots__marker-icon" aria-hidden="true"></span>
+                </button>
+                <div id="HotspotPanel-preview-b" class="hotspots__popover hotspots__popover--left" hidden>
+                  <div class="hotspots__card">
+                    <img class="hotspots__card-image" alt="" data-pv-img="card2" />
+                    <div class="hotspots__card-info">
+                      <a href="#" class="hotspots__card-title link">Wide-leg trouser</a>
+                      <div class="price"><span class="price-item">$185.00</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- x=20 y=85  → right, UP flip -->
+              <div class="hotspots__item" style="--hotspot-x: 20%; --hotspot-y: 85%;">
+                <button
+                  type="button"
+                  class="hotspots__marker"
+                  data-hotspot-marker
+                  aria-expanded="false"
+                  aria-controls="HotspotPanel-preview-c"
+                  aria-label="Leather loafer — View full details"
+                >
+                  <span class="hotspots__pulse" aria-hidden="true"></span>
+                  <span class="hotspots__marker-icon" aria-hidden="true"></span>
+                </button>
+                <div id="HotspotPanel-preview-c" class="hotspots__popover hotspots__popover--right hotspots__popover--up" hidden>
+                  <div class="hotspots__card">
+                    <img class="hotspots__card-image" alt="" data-pv-img="card3" />
+                    <div class="hotspots__card-info">
+                      <a href="#" class="hotspots__card-title link">Leather loafer</a>
+                      <div class="price"><span class="price-item">$240.00</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- x=88 y=88 → LEFT + UP flip: the worst case -->
+              <div class="hotspots__item" style="--hotspot-x: 88%; --hotspot-y: 88%;">
+                <button
+                  type="button"
+                  class="hotspots__marker"
+                  data-hotspot-marker
+                  aria-expanded="false"
+                  aria-controls="HotspotPanel-preview-d"
+                  aria-label="Canvas tote — View full details"
+                >
+                  <span class="hotspots__pulse" aria-hidden="true"></span>
+                  <span class="hotspots__marker-icon" aria-hidden="true"></span>
+                </button>
+                <div id="HotspotPanel-preview-d" class="hotspots__popover hotspots__popover--left hotspots__popover--up" hidden>
+                  <div class="hotspots__card">
+                    <img class="hotspots__card-image" alt="" data-pv-img="card4" />
+                    <div class="hotspots__card-info">
+                      <a href="#" class="hotspots__card-title link">Canvas tote</a>
+                      <div class="price"><span class="price-item">$95.00</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </image-hotspots>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================================================================== -->
+    <!-- Before / after slider (sections/before-after-slider.liquid)         -->
+    <!-- ================================================================== -->
+    <section class="pv-section" data-pv-scheme>
+      <h1 class="pv-label">
+        4 — Before / after slider
+        <small>drag anywhere on the image; Tab to it then use arrow keys</small>
+      </h1>
+
+      <style>
+        #BeforeAfter-preview .before-after__media {
+          aspect-ratio: 1.777;
+        }
+      </style>
+
+      <div class="color-scheme-1 gradient">
+        <div class="page-width isolate">
+          <h2 class="inline-richtext h1">See the difference</h2>
+
+          <before-after-slider
+            id="BeforeAfter-preview"
+            class="before-after"
+            style="--before-after-position: 50%;"
+          >
+            <div class="before-after__media" data-before-after-frame>
+              <img class="before-after__image" alt="Before" data-pv-img="before" />
+
+              <div class="before-after__layer">
+                <img class="before-after__image" alt="After" data-pv-img="after" />
+              </div>
+
+              <span class="before-after__label before-after__label--before">Before</span>
+              <span class="before-after__label before-after__label--after">After</span>
+
+              <input
+                type="range"
+                class="before-after__range"
+                data-before-after-range
+                min="0"
+                max="100"
+                step="1"
+                value="50"
+                aria-label="Drag to compare the before and after images"
+              />
+
+              <div class="before-after__divider" aria-hidden="true">
+                <span class="before-after__handle">
+                  <span class="before-after__handle-arrow before-after__handle-arrow--left"></span>
+                  <span class="before-after__handle-arrow before-after__handle-arrow--right"></span>
+                </span>
+              </div>
+            </div>
+          </before-after-slider>
+        </div>
+      </div>
+    </section>
+
+    <!--
+      Harness-only, and deliberately FIRST: `defer` preserves order, and the
+      carousel element measures its slides on upgrade, so the stand-in slides
+      have to be in the DOM before mobile-product-carousel.js runs.
+    -->
+    <script src="harness.js" defer></script>
+
+    <!-- Real theme scripts -->
+    <script src="../assets/details-disclosure.js" defer></script>
+    <script src="../assets/mobile-product-carousel.js" defer></script>
+    <script src="../assets/image-hotspots.js" defer></script>
+    <script src="../assets/before-after-slider.js" defer></script>
+  </body>
+</html>

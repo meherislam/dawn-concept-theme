@@ -1,0 +1,162 @@
+/*
+ * Local preview harness chrome only. Nothing here ships with the theme.
+ * Everything is prefixed .pv- so it can never collide with theme classes.
+ */
+
+body {
+  margin: 0;
+  padding-top: 4.8rem;
+}
+
+.pv-toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+  height: 4.8rem;
+  padding: 0 1.6rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 1.2rem;
+  color: #f4efe8;
+  background-color: #1f1b17;
+}
+
+.pv-toolbar label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+}
+
+.pv-toolbar__title {
+  margin-right: auto;
+}
+
+.pv-toolbar__note {
+  opacity: 0.6;
+}
+
+.pv-section {
+  border-top: 1px dashed rgba(31, 27, 23, 0.25);
+  padding-bottom: 4rem;
+}
+
+.pv-label {
+  margin: 0;
+  padding: 1.6rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: rgba(31, 27, 23, 0.55);
+  background-color: rgba(31, 27, 23, 0.04);
+}
+
+.pv-label small {
+  display: block;
+  margin-top: 0.4rem;
+  font-weight: 400;
+  text-transform: none;
+  opacity: 0.8;
+}
+
+/*
+ * Stands in for the sticky <header> section. In the real theme the surrounding
+ * .shopify-section-header supplies the stacking context the mega-menu panel
+ * needs to paint over the section below it.
+ */
+.pv-header {
+  position: relative;
+  z-index: 3;
+}
+
+/*
+ * Copied from the <style> block in sections/header.liquid — there is no
+ * section-header.css in Dawn 15, these rules are inlined by the section.
+ * Without them the nav renders as a bulleted vertical list.
+ */
+.list-menu {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.list-menu--inline {
+  display: inline-flex;
+  flex-wrap: wrap;
+}
+
+summary.list-menu__item {
+  padding-right: 2.7rem;
+}
+
+.list-menu__item {
+  display: flex;
+  align-items: center;
+  line-height: calc(1 + 0.3 / var(--font-body-scale));
+}
+
+.header__menu-item {
+  padding: 1rem 1.2rem;
+  text-decoration: none;
+  color: rgb(var(--color-foreground));
+}
+
+.pv-header__inner {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+  padding: 1.6rem 0;
+}
+
+.pv-logo {
+  font-family: var(--font-heading-family);
+  font-weight: 600;
+  letter-spacing: 0.2rem;
+}
+
+/*
+ * Stand-in for {% render 'card-product' %}. The real snippet needs Liquid, and
+ * the point of this page is the carousel track, not the card internals — so
+ * these are intentionally plain. Do not treat their styling as the theme's.
+ */
+.pv-card {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+.pv-card__media {
+  display: block;
+  width: 100%;
+  aspect-ratio: 0.8;
+  object-fit: cover;
+  border-radius: var(--product-card-corner-radius);
+  box-shadow: 0 0.6rem 2.4rem rgba(var(--color-shadow), 0.08);
+}
+
+.pv-card__title {
+  display: block;
+  margin-top: 1.2rem;
+  font-size: 1.5rem;
+}
+
+.pv-card__price {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 1.4rem;
+  opacity: 0.7;
+}
+
+/* Toggled from the toolbar to make layout boxes visible. */
+.pv-outline .concept-carousel__slide,
+.pv-outline .hotspots__item,
+.pv-outline .mega-menu__inner > *,
+.pv-outline .before-after__media {
+  outline: 1px solid rgba(181, 100, 60, 0.6);
+}
