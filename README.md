@@ -9,6 +9,7 @@ inspired by the look and feel of RoarTheme's *Concept*.
 [Design system](#design-system) ·
 [Custom sections](#custom-sections) ·
 [Local preview](#local-preview-no-store-required) ·
+[Testing against a store](#testing-against-a-store) ·
 [Development](#development) ·
 [Constraints](#constraints) ·
 [Staying current with Dawn](#staying-current-with-dawn) ·
@@ -122,11 +123,37 @@ This is not a toy: rendering the sections this way caught a bug where the custom
 elements defaulted to `display: inline`, which put a horizontal scrollbar on every
 desktop page containing the carousel. Theme check cannot see that.
 
+## Testing against a store
+
+**Use a free development store, not a store you already run.** A development store
+is a separate, fully functional store with no relationship to any existing one, so
+there is no live theme to put at risk.
+
+1. Sign in at [partners.shopify.com](https://partners.shopify.com) — a Partner
+   account is free and does not affect any store you already own.
+2. **Stores → Add store → Create development store**.
+3. Choose "Test and build" and let it populate test products.
+4. Point the CLI at it:
+
+```bash
+shopify theme dev --store your-dev-store.myshopify.com
+```
+
+No cost, no payment details, no expiry. This gives full Liquid rendering — real
+product cards, navigation from a live linklist, and the theme editor — which is
+everything the [local preview](#local-preview-no-store-required) cannot cover.
+
+If you ever run this against a store that has real customers, use `theme dev` or
+`theme push --unpublished`. Both create a hidden theme and leave the live one
+alone. Never use `--live`, `--allow-live`, `theme publish`, or a bare
+`theme push` (which prompts for a theme and makes it easy to hit live by mistake).
+Always pass `--store` explicitly rather than relying on a remembered default.
+
 ## Development
 
 ```bash
-shopify theme dev --store your-store.myshopify.com   # live reload against a store
-shopify theme check                                  # lint (currently: no offenses)
+shopify theme dev --store your-dev-store.myshopify.com   # live reload
+shopify theme check                                      # lint (currently: no offenses)
 ```
 
 `.shopifyignore` keeps `.preview/` out of anything uploaded to a store.
