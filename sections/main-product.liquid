@@ -596,10 +596,16 @@
                                   {% endif %}
                                 >
                                   <ul class="list-unstyled" role="list">
+                                    {% # theme-check-disable UndefinedObject %}
+                                    {%- comment -%}
+                                      `offset: continue` is valid Liquid for resuming a paginated
+                                      loop; theme check misreads `continue` as an object here.
+                                    {%- endcomment -%}
                                     {%- for product in recommendations.products
                                       limit: block.settings.products_per_page
                                       offset: continue
                                     -%}
+                                    {% # theme-check-enable UndefinedObject %}
                                       <li>
                                         {%- if block.settings.enable_quick_add -%}
                                           {% assign quick_add = 'standard' %}
@@ -737,14 +743,6 @@
         </script>
         <script src="{{ 'product-model.js' | asset_url }}" defer></script>
       {%- endif -%}
-
-      {%- liquid
-        if product.selected_or_first_available_variant.featured_media
-          assign seo_media = product.selected_or_first_available_variant.featured_media
-        else
-          assign seo_media = product.featured_media
-        endif
-      -%}
 
       <script type="application/ld+json">
         {{ product | structured_data }}
