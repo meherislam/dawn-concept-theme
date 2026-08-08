@@ -1,7 +1,7 @@
 [
   {
     "name": "theme_info",
-    "theme_name": "Dawn",
+    "theme_name": "Concept Inspired",
     "theme_version": "15.5.0",
     "theme_author": "Shopify",
     "theme_documentation_url": "https://help.shopify.com/manual/online-store/themes",
@@ -98,6 +98,24 @@
           "on_secondary_button": "secondary_button_label",
           "secondary_button_border": "secondary_button_label"
         }
+      },
+      {
+        "type": "header",
+        "content": "Accent"
+      },
+      {
+        "type": "color",
+        "id": "accent_color",
+        "label": "Accent color",
+        "info": "Used for highlights, active states, and interactive affordances across the theme.",
+        "default": "#B5643C"
+      },
+      {
+        "type": "color",
+        "id": "accent_contrast_color",
+        "label": "Accent contrast color",
+        "info": "Text and icon color shown on top of the accent color.",
+        "default": "#FFFFFF"
       }
     ]
   },

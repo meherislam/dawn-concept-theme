@@ -11,6 +11,17 @@ collection-component {
   --focused-base-outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
   --focused-base-outline-offset: 0.3rem;
   --focused-base-box-shadow: 0 0 0 0.3rem rgb(var(--color-background)), 0 0 0.5rem 0.4rem rgba(var(--color-foreground), 0.3);
+
+  /* Fallbacks: theme.liquid overrides these from the accent theme settings. */
+  --color-accent: 181, 100, 60;
+  --color-accent-contrast: 255, 255, 255;
+
+  /* Shared surface tokens for custom sections. */
+  --concept-radius-sm: 1.2rem;
+  --concept-radius-md: 1.6rem;
+  --concept-radius-pill: 999rem;
+  --concept-shadow-soft: 0 0.2rem 0.8rem rgba(var(--color-shadow), 0.06);
+  --concept-shadow-raised: 0 0.8rem 2.4rem rgba(var(--color-shadow), 0.12);
 }
 
 .product-card-wrapper .card,
@@ -276,9 +287,9 @@ h5,
   font-family: var(--font-heading-family);
   font-style: var(--font-heading-style);
   font-weight: var(--font-heading-weight);
-  letter-spacing: calc(var(--font-heading-scale) * 0.06rem);
+  letter-spacing: calc(var(--font-heading-scale) * -0.035rem);
   color: rgb(var(--color-foreground));
-  line-height: calc(1 + 0.3 / max(1, var(--font-heading-scale)));
+  line-height: calc(1 + 0.22 / max(1, var(--font-heading-scale)));
   word-break: break-word;
 }
 
@@ -304,7 +315,7 @@ h5,
 
 @media only screen and (min-width: 750px) {
   .h0 {
-    font-size: calc(var(--font-heading-scale) * 5.2rem);
+    font-size: calc(var(--font-heading-scale) * 6.4rem);
   }
 }
 
@@ -316,7 +327,7 @@ h1,
 @media only screen and (min-width: 750px) {
   h1,
   .h1 {
-    font-size: calc(var(--font-heading-scale) * 4rem);
+    font-size: calc(var(--font-heading-scale) * 5.2rem);
   }
 }
 
@@ -328,7 +339,7 @@ h2,
 @media only screen and (min-width: 750px) {
   h2,
   .h2 {
-    font-size: calc(var(--font-heading-scale) * 2.4rem);
+    font-size: calc(var(--font-heading-scale) * 3.2rem);
   }
 }
 
@@ -340,7 +351,7 @@ h3,
 @media only screen and (min-width: 750px) {
   h3,
   .h3 {
-    font-size: calc(var(--font-heading-scale) * 1.8rem);
+    font-size: calc(var(--font-heading-scale) * 2.2rem);
   }
 }
 
@@ -1236,10 +1247,38 @@ button.shopify-payment-button__button--unbranded {
   font-size: 1.5rem;
   text-decoration: none;
   color: rgb(var(--color-button-text));
-  transition: box-shadow var(--duration-short) ease;
+  transition: box-shadow var(--duration-short) ease, background-color var(--duration-default) ease,
+    transform var(--duration-default) var(--ease-out-slow);
   -webkit-appearance: none;
   appearance: none;
   background-color: rgba(var(--color-button), var(--alpha-button-background));
+}
+
+/* Primary buttons lift and deepen on hover; pill shape comes from settings.buttons_radius. */
+.button:not([disabled]):hover,
+.shopify-challenge__button:hover,
+.customer button:hover {
+  background-color: rgba(var(--color-button), var(--alpha-button-background));
+  transform: translateY(-0.2rem);
+  box-shadow: 0 0.6rem 1.6rem rgba(var(--color-shadow), 0.18);
+}
+
+.button--tertiary:not([disabled]):hover {
+  background-color: rgba(var(--color-foreground), 0.04);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .shopify-challenge__button,
+  .customer button {
+    transition: none;
+  }
+
+  .button:not([disabled]):hover,
+  .shopify-challenge__button:hover,
+  .customer button:hover {
+    transform: none;
+  }
 }
 
 .button:before,

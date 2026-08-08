@@ -136,6 +136,9 @@
         --font-body-scale: {{ settings.body_scale | divided_by: 100.0 }};
         --font-heading-scale: {{ settings.heading_scale | times: 1.0 | divided_by: settings.body_scale }};
 
+        --color-accent: {{ settings.accent_color.red }},{{ settings.accent_color.green }},{{ settings.accent_color.blue }};
+        --color-accent-contrast: {{ settings.accent_contrast_color.red }},{{ settings.accent_contrast_color.green }},{{ settings.accent_contrast_color.blue }};
+
         --media-padding: {{ settings.media_padding }}px;
         --media-border-opacity: {{ settings.media_border_opacity | divided_by: 100.0 }};
         --media-border-width: {{ settings.media_border_thickness }}px;
