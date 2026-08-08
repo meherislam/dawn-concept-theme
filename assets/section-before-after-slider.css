@@ -1,0 +1,122 @@
+.before-after {
+  --before-after-position: 50%;
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-radius: var(--concept-radius-md);
+  box-shadow: var(--concept-shadow-soft);
+  /*
+   * pan-y hands vertical scrolling back to the browser so the slider never traps
+   * the page scroll on touch, while horizontal drags still reach our pointer handlers.
+   */
+  touch-action: pan-y;
+}
+
+.before-after__media {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.before-after__image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.before-after__layer {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 0 0 var(--before-after-position));
+}
+
+.before-after__divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--before-after-position);
+  width: 0.2rem;
+  margin-left: -0.1rem;
+  background-color: rgb(var(--color-accent-contrast));
+  box-shadow: 0 0 0.8rem rgba(var(--color-shadow), 0.4);
+  pointer-events: none;
+}
+
+.before-after__handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  width: 4.4rem;
+  height: 4.4rem;
+  transform: translate(-50%, -50%);
+  border-radius: var(--concept-radius-pill);
+  color: rgb(var(--color-accent-contrast));
+  background-color: rgb(var(--color-accent));
+  box-shadow: 0 0.2rem 1.2rem rgba(var(--color-shadow), 0.4);
+}
+
+.before-after__handle-arrow {
+  width: 0;
+  height: 0;
+  border-top: 0.5rem solid transparent;
+  border-bottom: 0.5rem solid transparent;
+}
+
+.before-after__handle-arrow--left {
+  border-right: 0.6rem solid currentColor;
+}
+
+.before-after__handle-arrow--right {
+  border-left: 0.6rem solid currentColor;
+}
+
+/*
+ * A real range input drives the value so keyboard and assistive tech work natively.
+ * It is transparent and stretched across the frame; the visible handle is the div above.
+ */
+.before-after__range {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  cursor: ew-resize;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+}
+
+.before-after__range:focus-visible ~ .before-after__divider .before-after__handle {
+  outline: 0.3rem solid rgb(var(--color-accent-contrast));
+  outline-offset: 0.2rem;
+  box-shadow: 0 0 0 0.5rem rgba(var(--color-shadow), 0.4);
+}
+
+.before-after__label {
+  position: absolute;
+  top: 1.6rem;
+  z-index: 1;
+  padding: 0.6rem 1.4rem;
+  border-radius: var(--concept-radius-pill);
+  font-size: 1.2rem;
+  letter-spacing: 0.06rem;
+  text-transform: uppercase;
+  color: rgb(var(--color-foreground));
+  background-color: rgba(var(--color-background), 0.88);
+  pointer-events: none;
+}
+
+.before-after__label--before {
+  left: 1.6rem;
+}
+
+.before-after__label--after {
+  right: 1.6rem;
+}

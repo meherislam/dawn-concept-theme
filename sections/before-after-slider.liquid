@@ -1,0 +1,235 @@
+{{ 'section-before-after-slider.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'before-after-slider.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign before_image = section.settings.image_before
+  assign after_image = section.settings.image_after
+
+  case section.settings.image_ratio
+    when 'square'
+      assign ratio = 1
+    when 'portrait'
+      assign ratio = 0.8
+    when 'landscape'
+      assign ratio = 1.777
+    else
+      assign ratio = before_image.aspect_ratio | default: 1.777
+  endcase
+-%}
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  #BeforeAfter-{{ section.id }} .before-after__media {
+    aspect-ratio: {{ ratio }};
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="{% unless section.settings.full_width %}page-width{% endunless %} section-{{ section.id }}-padding isolate">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="inline-richtext {{ section.settings.heading_size }}">
+        {{ section.settings.heading }}
+      </h2>
+    {%- endif -%}
+
+    <before-after-slider
+      id="BeforeAfter-{{ section.id }}"
+      class="before-after"
+      style="--before-after-position: {{ section.settings.starting_position }}%;"
+    >
+      <div class="before-after__media" data-before-after-frame>
+        {%- if before_image != blank -%}
+          {{
+            before_image
+            | image_url: width: 3000
+            | image_tag:
+              loading: 'lazy',
+              class: 'before-after__image',
+              widths: '375, 550, 750, 1100, 1500, 2200, 3000',
+              sizes: '(min-width: 1400px) 1400px, 100vw',
+              alt: before_image.alt
+          }}
+        {%- else -%}
+          {{ 'lifestyle-1' | placeholder_svg_tag: 'before-after__image' }}
+        {%- endif -%}
+
+        <div class="before-after__layer">
+          {%- if after_image != blank -%}
+            {{
+              after_image
+              | image_url: width: 3000
+              | image_tag:
+                loading: 'lazy',
+                class: 'before-after__image',
+                widths: '375, 550, 750, 1100, 1500, 2200, 3000',
+                sizes: '(min-width: 1400px) 1400px, 100vw',
+                alt: after_image.alt
+            }}
+          {%- else -%}
+            {{ 'lifestyle-2' | placeholder_svg_tag: 'before-after__image' }}
+          {%- endif -%}
+        </div>
+
+        {%- if section.settings.label_before != blank -%}
+          <span class="before-after__label before-after__label--before">
+            {{- section.settings.label_before | escape -}}
+          </span>
+        {%- endif -%}
+
+        {%- if section.settings.label_after != blank -%}
+          <span class="before-after__label before-after__label--after">
+            {{- section.settings.label_after | escape -}}
+          </span>
+        {%- endif -%}
+
+        <input
+          type="range"
+          class="before-after__range"
+          data-before-after-range
+          min="0"
+          max="100"
+          step="1"
+          value="{{ section.settings.starting_position }}"
+          aria-label="{{ section.settings.slider_label | escape }}"
+        >
+
+        <div class="before-after__divider" aria-hidden="true">
+          <span class="before-after__handle">
+            <span class="before-after__handle-arrow before-after__handle-arrow--left"></span>
+            <span class="before-after__handle-arrow before-after__handle-arrow--right"></span>
+          </span>
+        </div>
+      </div>
+    </before-after-slider>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Before after slider",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "default": "See the difference",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "h2", "label": "Small" },
+        { "value": "h1", "label": "Medium" },
+        { "value": "h0", "label": "Large" }
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_before",
+      "label": "Before image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_after",
+      "label": "After image"
+    },
+    {
+      "type": "text",
+      "id": "label_before",
+      "default": "Before",
+      "label": "Before label"
+    },
+    {
+      "type": "text",
+      "id": "label_after",
+      "default": "After",
+      "label": "After label"
+    },
+    {
+      "type": "text",
+      "id": "slider_label",
+      "default": "Drag to compare the before and after images",
+      "label": "Slider accessibility label",
+      "info": "Announced by screen readers when the comparison handle receives focus."
+    },
+    {
+      "type": "range",
+      "id": "starting_position",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Starting divider position",
+      "default": 50
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "options": [
+        { "value": "adapt", "label": "Adapt to before image" },
+        { "value": "square", "label": "Square" },
+        { "value": "landscape", "label": "Landscape" },
+        { "value": "portrait", "label": "Portrait" }
+      ],
+      "default": "landscape",
+      "label": "Image ratio"
+    },
+    {
+      "type": "checkbox",
+      "id": "full_width",
+      "default": false,
+      "label": "Make section full width"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "default": "scheme-1",
+      "label": "Color scheme"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "Before after slider"
+    }
+  ]
+}
+{% endschema %}

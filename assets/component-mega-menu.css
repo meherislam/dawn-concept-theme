@@ -34,10 +34,21 @@
   transform: translateY(0);
 }
 
+.mega-menu__inner {
+  display: flex;
+  align-items: flex-start;
+  gap: 4rem;
+}
+
+.mega-menu__inner > .mega-menu__list {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
 .mega-menu__list {
   display: grid;
   gap: 1.8rem 4rem;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(var(--mega-menu-columns, 6), minmax(0, 1fr));
   list-style: none;
 }
 
@@ -84,4 +95,63 @@
 
 .mega-menu__list--condensed .mega-menu__link {
   font-weight: normal;
+}
+
+.mega-menu__promo {
+  flex: 0 0 26rem;
+  max-width: 26rem;
+}
+
+.mega-menu__promo-card {
+  display: block;
+  text-decoration: none;
+  color: rgb(var(--color-foreground));
+}
+
+.mega-menu__promo-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--concept-radius-sm);
+}
+
+.mega-menu__promo-body {
+  display: block;
+  margin-top: 1.2rem;
+}
+
+.mega-menu__promo-heading {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: bold;
+  line-height: calc(1 + 0.3 / var(--font-body-scale));
+}
+
+.mega-menu__promo-text {
+  display: block;
+  margin-top: 0.4rem;
+  font-size: 1.3rem;
+  color: rgba(var(--color-foreground), 0.75);
+}
+
+.mega-menu__promo-cta {
+  display: inline-block;
+  margin-top: 0.8rem;
+  font-size: 1.3rem;
+  color: rgb(var(--color-accent));
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
+}
+
+.mega-menu__promo-card:hover .mega-menu__promo-cta {
+  text-decoration-thickness: 0.2rem;
+}
+
+/* Below the mega-menu breakpoint the promo would crowd the link columns out. */
+@media screen and (max-width: 1199px) {
+  .mega-menu__promo {
+    display: none;
+  }
 }
